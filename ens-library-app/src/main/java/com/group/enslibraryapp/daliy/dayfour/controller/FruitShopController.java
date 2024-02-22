@@ -1,11 +1,15 @@
 package com.group.enslibraryapp.daliy.dayfour.controller;
 
+import com.group.enslibraryapp.daliy.dayfour.dto.reponse.CalculatorSaleResponseDto;
+import com.group.enslibraryapp.daliy.dayfour.dto.reponse.FruitListResponseDto;
 import com.group.enslibraryapp.daliy.dayfour.dto.request.FruitSaleRequestDto;
 import com.group.enslibraryapp.daliy.dayfour.dto.request.FruitStockRequestDto;
 import com.group.enslibraryapp.daliy.dayfour.service.FruitShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,5 +37,21 @@ public class FruitShopController {
         fruitShopService.fruitSale(request);
     }
 
+    /**
+     * 과일에 대한 판매 및 미 판매에 대한 조회 결과를 나타냅니다.
+     * @return
+     */
     @GetMapping("/fruit/stat")
+    public List<CalculatorSaleResponseDto> notSaleAndSaleSumAmount(@RequestParam("name") String name){
+       return fruitShopService.calculatorSale(name);
+    }
+
+    /**
+     * 과일에 대한 전체 조회 결과를 나타냅니다.
+     * @return
+     */
+    @GetMapping("/fruits")
+    public List<FruitListResponseDto> fruitList(){
+        return fruitShopService.findAll();
+    }
 }
