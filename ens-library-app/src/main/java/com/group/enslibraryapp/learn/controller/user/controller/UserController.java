@@ -3,18 +3,18 @@ package com.group.enslibraryapp.learn.controller.user.controller;
 import com.group.enslibraryapp.learn.controller.user.domain.Fruit;
 import com.group.enslibraryapp.learn.controller.user.domain.User;
 import com.group.enslibraryapp.learn.controller.user.dto.request.UserCreateRequestDto;
+import com.group.enslibraryapp.learn.controller.user.dto.request.UserUpdateRequestDto;
 import com.group.enslibraryapp.learn.controller.user.dto.response.UserResponseDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
 @RestController
 public class UserController {
@@ -35,7 +35,7 @@ public class UserController {
                 long id = rs.getLong("id");
                 String name = rs.getString("name");
                 int age = rs.getInt("age");
-                return new UserResponseDto(id,name,age);
+                return new UserResponseDto(id, name, age);
             }
         });
     }
@@ -51,4 +51,31 @@ public class UserController {
     public Fruit findAllFruit() {
         return new Fruit("키위", 2000);
     }
+
+    @PutMapping("/user")
+    public void updateUser(@RequestBody UserUpdateRequestDto request) {
+        String readSql = "select * from user where id = ?";
+        boolean isUserNotExist = jdbcTemplate.query(readSql, (rs, rowNum) -> 0,request.getId()).isEmpty();
+
+        if(!isUserNotExist){
+            throw new IllegalArgumentException();
+        }
+
+        String sql = "UPDATE user SET name = ? where id= ?";
+        jdbcTemplate.update(sql, request.getName(),request.getId());
+
+    }
+
+    @DeleteMapping("/user")
+    public void deleteUser(@RequestParam("name") String name) {
+
+        String readSql = "select * from user where id = ?";
+        boolean isUserNotExist = jdbcTemplate.query(readSql, (rs, rowNum) -> 0,name).isEmpty();
+        if(!isUserNotExist){
+            throw new IllegalArgumentException();
+        }
+        String sql = "DELETE FROM user WHERE name =?";
+        jdbcTemplate.update(sql, name);
+    }
+
 }
