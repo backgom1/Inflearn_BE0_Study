@@ -5,6 +5,8 @@ import com.group.enslibraryapp.learn.controller.user.domain.User;
 import com.group.enslibraryapp.learn.controller.user.dto.request.UserCreateRequestDto;
 import com.group.enslibraryapp.learn.controller.user.dto.request.UserUpdateRequestDto;
 import com.group.enslibraryapp.learn.controller.user.dto.response.UserResponseDto;
+import com.group.enslibraryapp.learn.controller.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,9 @@ import static org.apache.logging.log4j.ThreadContext.isEmpty;
 @RestController
 public class UserController {
 
-    private final List<User> users = new ArrayList<>();
+
+    @Autowired
+    private UserService userService;
     private final JdbcTemplate jdbcTemplate;
 
     public UserController(JdbcTemplate jdbcTemplate) {
@@ -54,28 +58,11 @@ public class UserController {
 
     @PutMapping("/user")
     public void updateUser(@RequestBody UserUpdateRequestDto request) {
-        String readSql = "select * from user where id = ?";
-        boolean isUserNotExist = jdbcTemplate.query(readSql, (rs, rowNum) -> 0,request.getId()).isEmpty();
-
-        if(!isUserNotExist){
-            throw new IllegalArgumentException();
-        }
-
-        String sql = "UPDATE user SET name = ? where id= ?";
-        jdbcTemplate.update(sql, request.getName(),request.getId());
-
+        userService.updateUser(request);
     }
-
     @DeleteMapping("/user")
     public void deleteUser(@RequestParam("name") String name) {
-
-        String readSql = "select * from user where id = ?";
-        boolean isUserNotExist = jdbcTemplate.query(readSql, (rs, rowNum) -> 0,name).isEmpty();
-        if(!isUserNotExist){
-            throw new IllegalArgumentException();
-        }
-        String sql = "DELETE FROM user WHERE name =?";
-        jdbcTemplate.update(sql, name);
+        userService.deleteUser(name);
     }
 
 }
