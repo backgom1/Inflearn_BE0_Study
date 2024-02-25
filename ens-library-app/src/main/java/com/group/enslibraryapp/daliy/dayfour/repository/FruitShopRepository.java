@@ -2,17 +2,11 @@ package com.group.enslibraryapp.daliy.dayfour.repository;
 
 import com.group.enslibraryapp.daliy.dayfour.dto.reponse.CalculatorSaleResponseDto;
 import com.group.enslibraryapp.daliy.dayfour.dto.reponse.FruitListResponseDto;
-import com.group.enslibraryapp.daliy.dayfour.dto.request.CalculatorSaleRequestDto;
 import com.group.enslibraryapp.daliy.dayfour.dto.request.FruitSaleRequestDto;
 import com.group.enslibraryapp.daliy.dayfour.dto.request.FruitStockRequestDto;
-import com.group.enslibraryapp.daliy.dayfour.enums.SaleStatusEnum;
-import com.group.enslibraryapp.learn.controller.user.dto.response.UserResponseDto;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 

@@ -3,6 +3,7 @@ package com.group.enslibraryapp.daliy.dayfive;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.stream.IntStream;
 
 public class DiceAction {
 
@@ -46,7 +47,6 @@ public class DiceAction {
 
     /**
      * 주사위 눈 카운트 메서드
-     *
      * @param diceAction 주사위를 던질 횟수와 주사위 눈의 수를 가지는 객체
      */
     public void spinningDice(DiceAction diceAction) {
