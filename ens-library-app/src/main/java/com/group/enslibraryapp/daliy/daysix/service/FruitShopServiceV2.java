@@ -1,10 +1,10 @@
-package com.group.enslibraryapp.daliy.dayfour.service;
+package com.group.enslibraryapp.daliy.daysix.service;
 
-import com.group.enslibraryapp.daliy.dayfour.dto.reponse.CalculatorSaleResponseDto;
-import com.group.enslibraryapp.daliy.dayfour.dto.reponse.FruitListResponseDto;
-import com.group.enslibraryapp.daliy.dayfour.dto.request.FruitSaleRequestDto;
-import com.group.enslibraryapp.daliy.dayfour.dto.request.FruitStockRequestDto;
-import com.group.enslibraryapp.daliy.dayfour.repository.FruitShopRepository;
+import com.group.enslibraryapp.daliy.daysix.dto.reponse.CalculatorSaleResponseDto;
+import com.group.enslibraryapp.daliy.daysix.dto.reponse.FruitListResponseDto;
+import com.group.enslibraryapp.daliy.daysix.dto.request.FruitSaleRequestDto;
+import com.group.enslibraryapp.daliy.daysix.dto.request.FruitStockRequestDto;
+import com.group.enslibraryapp.daliy.daysix.repository.IFruitRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,9 +14,9 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class FruitShopService {
+public class FruitShopServiceV2 {
 
-    private final FruitShopRepository fruitShopRepository;
+    private final IFruitRepository fruitShopRepository;
 
     /**
      * 제고를 입고하기 위한 서비스 로직입니다.
@@ -24,7 +24,6 @@ public class FruitShopService {
     public void warehousingFruit(FruitStockRequestDto request) {
         //추후에 예외 처리를 넣을곳
         saveValidation(request);
-
         fruitShopRepository.save(request);
 
         log.info("과일 입고 성공!!");
@@ -43,6 +42,7 @@ public class FruitShopService {
             throw new IllegalArgumentException("과일 이름이 가격이 존재하지 않습니다.");
         }
     }
+
 
     /**
      * 과일 판매를 위한 서비스 로직
@@ -73,13 +73,14 @@ public class FruitShopService {
      */
     private void saleValidation(String name) {
         if (name == null || name.trim().isEmpty()){
-         throw new IllegalArgumentException("name은 공백이 될수 없습니다.");
+            throw new IllegalArgumentException("name은 공백이 될수 없습니다.");
         }
 
         if(name.matches(".*"+"[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]+"+".*")){
             throw new IllegalArgumentException("이름에 특수문자 포함해 검색할 수 없습니다.");
         }
     }
+
 
     public List<FruitListResponseDto> findAll() {
         return fruitShopRepository.findByAll();

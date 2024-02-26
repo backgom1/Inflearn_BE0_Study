@@ -5,8 +5,6 @@ import com.group.enslibraryapp.learn.domain.user.dto.request.UserCreateRequestDt
 import com.group.enslibraryapp.learn.domain.user.dto.request.UserUpdateRequestDto;
 import com.group.enslibraryapp.learn.domain.user.dto.response.UserResponseDto;
 import com.group.enslibraryapp.learn.domain.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
