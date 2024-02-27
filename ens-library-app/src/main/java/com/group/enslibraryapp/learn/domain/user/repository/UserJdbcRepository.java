@@ -12,10 +12,10 @@ import java.util.List;
 
 @Repository
 @Slf4j
-public class UserRepository {
+public class UserJdbcRepository {
 
     private final JdbcTemplate jdbcTemplate;
-    public UserRepository(JdbcTemplate jdbcTemplate) {
+    public UserJdbcRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -29,18 +29,18 @@ public class UserRepository {
         return jdbcTemplate.query(readSql, (rs, rowNum) -> 0,name).isEmpty();
     }
 
-    public void updateUser(UserUpdateRequestDto request) {
+    public void updateUserV1(UserUpdateRequestDto request) {
         String sql = "UPDATE user SET name = ? where id= ?";
         jdbcTemplate.update(sql, request.getName(),request.getId());
 
     }
 
-    public void deleteUser(String name){
+    public void deleteUserV1(String name){
         String sql = "DELETE FROM user WHERE name =?";
         jdbcTemplate.update(sql, name);
     }
 
-    public List<UserResponseDto> getUser() {
+    public List<UserResponseDto> getUserV1() {
         String sql = "select * from user";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             long id = rs.getLong("id");
@@ -50,7 +50,7 @@ public class UserRepository {
         });
     }
 
-    public void save(UserCreateRequestDto request) {
+    public void saveV1(UserCreateRequestDto request) {
         String sql = "insert into user (name,age) values (?,?)";
         jdbcTemplate.update(sql, request.getName(), request.getAge());
     }
