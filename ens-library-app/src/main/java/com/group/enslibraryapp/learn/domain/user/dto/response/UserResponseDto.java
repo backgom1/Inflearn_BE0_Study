@@ -6,15 +6,9 @@ import lombok.Getter;
 @Getter
 public class UserResponseDto {
 
-    private Long id;
-    private String name;
-    private Integer age;
-
-    public UserResponseDto(Long id, User user) {
-        this.id = id;
-        this.name = user.getName();
-        this.age = user.getAge();
-    }
+    private final Long id;
+    private final String name;
+    private final Integer age;
 
     public UserResponseDto(Long id, String name, int age) {
         this.id = id;

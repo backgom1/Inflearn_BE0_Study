@@ -4,7 +4,7 @@ import com.group.enslibraryapp.learn.domain.fruit.domain.Fruit;
 import com.group.enslibraryapp.learn.domain.user.dto.request.UserCreateRequestDto;
 import com.group.enslibraryapp.learn.domain.user.dto.request.UserUpdateRequestDto;
 import com.group.enslibraryapp.learn.domain.user.dto.response.UserResponseDto;
-import com.group.enslibraryapp.learn.domain.user.service.UserServiceV1;
+import com.group.enslibraryapp.learn.domain.user.service.UserServiceV2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,16 +15,16 @@ public class UserController {
 
 
     @Autowired
-    private UserServiceV1 userServiceV1;
+    private UserServiceV2 userService;
 
     @GetMapping("/user")
     public List<UserResponseDto> getUsers() {
-       return userServiceV1.getUsers();
+       return userService.getUsers();
     }
 
     @PostMapping("/user")
     public void saveUser(@RequestBody UserCreateRequestDto request) {
-       userServiceV1.save(request);
+       userService.saveUser(request);
     }
 
     @GetMapping("/fruit")
@@ -34,14 +34,14 @@ public class UserController {
 
 
     @PutMapping("/user")
-    public void updateUser(@RequestBody UserUpdateRequestDto request) {
-        userServiceV1.updateUser(request);
+    public void updateUser(@RequestBody UserUpdateRequestDto request) throws IllegalAccessException {
+        userService.updateUser(request);
     }
 
 
     @DeleteMapping("/user")
     public void deleteUser(@RequestParam("name") String name) {
-        userServiceV1.deleteUser(name);
+        userService.deleteUser(name);
     }
 
 }
