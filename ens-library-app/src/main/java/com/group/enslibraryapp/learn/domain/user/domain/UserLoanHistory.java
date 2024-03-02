@@ -1,14 +1,13 @@
 package com.group.enslibraryapp.learn.domain.user.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserLoanHistory {
 
@@ -16,14 +15,15 @@ public class UserLoanHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
 
-    private long userId;
+    @ManyToOne
+    private User user;
 
     private String bookName;
 
     private boolean isReturn;
 
-    public UserLoanHistory(long userId, String bookName) {
-        this.userId = userId;
+    public UserLoanHistory(User user, String bookName) {
+        this.user = user;
         this.bookName = bookName;
         this.isReturn = false;
     }
